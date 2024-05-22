@@ -1,3 +1,7 @@
+//baixar essas dependencias ->
+//npm i  express mysql dotenv cors bpody-parser
+//npm i nodemon --save-dev
+
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
