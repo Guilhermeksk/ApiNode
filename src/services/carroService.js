@@ -1,4 +1,4 @@
-const { buscarUm } = require('../controllers/carroController');
+const { buscarUm, alterar } = require('../controllers/carroController');
 const db = require('../db');
 
 module.exports = {
@@ -25,5 +25,41 @@ module.exports = {
         });
 
     });
+},
+
+inserir: (modelo, placa) => {
+    return new Promise((aceito, rejeitado) => {
+        db.query('INSERT INTO carros (modelo, placa) VALUES (? , ?)',
+            [modelo, placa],
+             (error, results)=>{
+            if(error){rejeitado(error); return;}
+            aceito(results.insertCodigo);    
+    });
+
+});
+},
+
+alterar: (codigo, modelo, placa) => {
+    return new Promise((aceito, rejeitado) => {
+        db.query('UPDATE carros SET modelo = ?, placa = ? WHERE codigo = ?',
+            [modelo, placa, codigo],
+             (error, results)=>{
+            if(error){rejeitado(error); return;}
+            aceito(results);    
+    });
+
+});
+},
+
+deletar: (codigo) => {
+    return new Promise((aceito, rejeitado) => {
+        db.query('DELETE FROM carros WHERE codigo = ?', [codigo], (error, results)=>{
+            if(error){rejeitado(error); return;}
+                    aceito(results);
+                
+    });
+
+});
 }
+
 }

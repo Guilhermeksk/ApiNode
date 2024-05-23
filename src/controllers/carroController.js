@@ -24,5 +24,51 @@
             json.result = carro;
         }
         res.json(json);
-    }
+    }, 
+    inserir: async(req, res)=>{
+        let json = {error:'', result:{}};
+
+        let modelo = req.body.modelo;
+        let placa = req.body.placa;
+
+        if(modelo && placa){
+        let carroCodigo = await carroService.inserir(modelo, placa);
+
+            json.result = {
+                codigo: carroCodigo,
+                modelo,
+                placa
+            };
+        }else{
+            json.error = 'campos nao enviados!';
+        }
+        res.json(json);
+
+    }, 
+    alterar: async(req, res)=>{
+        let json = {error:'', result:{}};
+
+        let codigo = req.params.codigo;
+        let modelo = req.body.modelo;
+        let placa = req.body.placa;
+
+        if(modelo && placa && codigo){
+         await carroService.alterar(codigo, modelo, placa);
+
+            json.result = {
+                codigo,
+                modelo,
+                placa
+            };
+        }else{
+            json.error = 'campos nao enviados!';
+        }
+        res.json(json);
+
+    },
+     deletar: async (req, res)=>{ 
+        let json = {error:'', result:{}};
+        await carroService.deletar(req.params.codigo);
+        res.json(json);
+     }
  }
