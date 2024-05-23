@@ -2,7 +2,7 @@
  
  module.exports ={
     buscarTodos: async (req, res) =>{
-        let json ={error:'', result:[]};
+        let json = {error:'', result:[]};
 
         let carros = await carroService.buscarTodos();
 
@@ -10,7 +10,7 @@
             json.result.push({
                 codigo: carros[i].codigo,
                 descricao: carros[i].modelo
-            });
+            }); 
         }
         res.json(json);
     },
